@@ -1,167 +1,134 @@
 var Vehicle = function() {
+    this.div = document.createElement('div');
+    document.getElementById('vehicles').appendChild(this.div);
+    $(this.div).css({
+        left: Math.floor(Math.random() * 1200),
+        top: Math.floor(Math.random() * 500)
+    });
+    
     this.speed = null;
     this.damageLimit = null;
     this.damage = null;
 }
 
-Vehicle.prototype.move = function() { 
-    $('.car').animate({'left':'1200'},1000).animate({'left':'-20'},1000, moveCar);
-    $('.cop-car').animate({'top':'550'},1000).animate({'top':'-20'},1000, moveCopCar);
-    $('.tank').animate({'left':'1200'},1500).animate({'left':'-20'},1500, moveTank);
-    $('.motorcycle').animate({'left': '1200', 'top': '550'},1500).animate({'left': '-20', 'top': '-5'},1500, moveMotorcycle);
-    
-    
-  
-    
+Vehicle.prototype.move = function() {
+    var randomNum = Math.floor(Math.random() * 1200) + 1;
+    var randomNumb = Math.floor(Math.random() * 550) + 1;
+    $('.car').animate({ 'left': '1200' }, 1000).animate({ 'left': '-20' }, 1000);
+    $('.cop-car').animate({ 'top': '550' }, 1000).animate({ 'top': '-20' }, 1000);
+    $('.tank').animate({ 'left': '1200' }, 2000).animate({ 'left': '-20' }, 2000);
+    $('.motorcycle').animate({ 'left': randomNum, 'top': randomNumb }, 1500).animate({ 'left': '-20', 'top': '-5' }, 1500);
+
 }
 
-// Vehicle.prototype.damage = function(e, object) {
-     
-//     if(e.target == $(object)) {
-//        $(object).damage++;
-// };
-// }
+Vehicle.prototype.damaged = function() {
+    this.damage = this.damage++;
+}
 
-// Vehicle.prototype.totaled = function(object) {
-//     if($(object).damage >= $(object).damageLimit) {
-//         $(object).remove();
-//     }
-// }
+Vehicle.prototype.totaled = function() {
+    if (this.damage == this.damageLimit) {
+        this.remove();
+    }
+
+}
 
 var Car = function() {
-    Vehicle.call(this);   
+    Vehicle.call(this);
+    this.damage = 0;
     this.damageLimit = 2;
-    
+    this.div.className = 'car';
 }
 Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
 
-Car.prototype.insert = function () {
-    this.div = document.createElement('div'); 
-    this.div.className = 'car';
-    document.getElementById('vehicles').appendChild(this.div);
-    $(this.div).css({
-        left: Math.floor( Math.random() * 500),
-        top: Math.floor( Math.random() * 500)
-    });
-}
 
 function addCar() {
     var car = new Car();
-    car.insert();
+    car.move()
+    setInterval(function () {
+        car.move();
+    }, 1000);
 }
 
-function moveCar () {
-    var car = new Car();
-    car.move('.car');
-}
+
+// function CarDamage () {
+//     var car = new Car();
+//     car.damaged('.car');
+// }
+
+// function CarTotaled () {
+//     var car = new Car();
+//     car.totaled();
+// }
 
 
 var CopCar = function() {
     Vehicle.call(this);
     this.damageLimit = 3;
-    
+    this.div.className = 'cop-car';
 }
 CopCar.prototype = Object.create(Vehicle.prototype);
 CopCar.prototype.constructor = CopCar;
 
-CopCar.prototype.insert = function () {
-    this.div = document.createElement('div'); 
-    this.div.className = 'cop-car';
-    document.getElementById('vehicles').appendChild(this.div);
-    $(this.div).css({
-        left: Math.floor( Math.random() * 500),
-        top: Math.floor( Math.random() * 500)
-    });
-}
-
 
 function addCopCar() {
     var copper = new CopCar();
-    copper.insert();
-}
-
-function moveCopCar () {
-    var copper = new CopCar();
     copper.move();
+    setInterval(function () {
+        copper.move();
+    }, 1000);
 }
 
 var Tank = function() {
     Vehicle.call(this);
     this.damageLimit = 10;
-    
+    this.div.className = 'tank';
+    this.div.addEventListener('click', function () {
+        this.damage();
+    }.bind(this));
+
 }
 Tank.prototype = Object.create(Vehicle.prototype);
 Tank.prototype.constructor = Tank;
 
-Tank.prototype.insert = function () {
-    this.div = document.createElement('div'); 
-    this.div.className = 'tank';
-    document.getElementById('vehicles').appendChild(this.div);
-    $(this.div).css({
-        left: Math.floor( Math.random() * 500),
-        top: Math.floor( Math.random() * 500)
-    });
-}
-
-
 function addTank() {
     var tanky = new Tank();
-    tanky.insert();
-}
-
-function moveTank () {
-    var tanky = new Tank();
     tanky.move();
+    setInterval(function () {
+        tanky.move();
+    }, 2000);
 }
-
 
 var Motorcycle = function() {
     Vehicle.call(this);
     this.damageLimit = 1;
-    
+    this.div.className = 'motorcycle';
+
 }
 Motorcycle.prototype = Object.create(Vehicle.prototype);
 Motorcycle.prototype.constructor = Motorcycle;
 
-Motorcycle.prototype.insert = function () {
-    this.div = document.createElement('div'); 
-    this.div.className = 'motorcycle';
-    document.getElementById('vehicles').appendChild(this.div);
-    $(this.div).css({
-        left: Math.floor( Math.random() * 500),
-        top: Math.floor( Math.random() * 500)
-    });
-}
-
-
 function addMotorcycle() {
     var cycle = new Motorcycle();
-    cycle.insert();
-}
-
-function moveMotorcycle () {
-    var cycle = new Motorcycle();
     cycle.move();
+    setInterval(function () {
+        cycle.move();
+    }, 2000);
 }
 
-$(document).ready(function () {
-    $('.add-car').click(function () {
-        addCar();
-        moveCar();   
+$(document).ready(function() {
+
+    $('.add-car').click(function() {
+        addCar(); 
     });
-    $('.add-cop').click(function () {
-        addCopCar();
-        moveCopCar();
+    $('.add-cop').click(function() {
+        addCopCar();    
     })
 
-    $('.add-tank').click(function () {
-        addTank();
-        moveTank();
+    $('.add-tank').click(function() {
+        addTank();        
     })
-    $('.add-motorcycle').click(function () {
-        addMotorcycle();
-        moveMotorcycle();
+    $('.add-motorcycle').click(function() {
+        addMotorcycle();      
     });
-    
 })
