@@ -38,6 +38,9 @@ var Car = function() {
     this.damage = 0;
     this.damageLimit = 2;
     this.div.className = 'car';
+    this.div.addEventListener('click', function () {
+        this.damaged();
+    }.bind(this));
 }
 Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
@@ -53,8 +56,12 @@ function addCar() {
 
 var CopCar = function() {
     Vehicle.call(this);
+    this.damage = 0;
     this.damageLimit = 3;
     this.div.className = 'cop-car';
+    this.div.addEventListener('click', function () {
+        this.damaged();
+    }.bind(this));
 }
 CopCar.prototype = Object.create(Vehicle.prototype);
 CopCar.prototype.constructor = CopCar;
@@ -70,6 +77,7 @@ function addCopCar() {
 
 var Tank = function() {
     Vehicle.call(this);
+    this.damage = 0;
     this.damageLimit = 10;
     this.div.className = 'tank';
     this.div.addEventListener('click', function () {
@@ -90,8 +98,12 @@ function addTank() {
 
 var Motorcycle = function() {
     Vehicle.call(this);
+    this.damage = 0;
     this.damageLimit = 1;
     this.div.className = 'motorcycle';
+    this.div.addEventListener('click', function () {
+        this.damaged();
+    }.bind(this));
 
 }
 Motorcycle.prototype = Object.create(Vehicle.prototype);
