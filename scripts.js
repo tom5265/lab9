@@ -1,19 +1,29 @@
 var Vehicle = function() {
     this.speed = null;
     this.damageLimit = null;
+    this.damage = null;
 }
 
-Vehicle.prototype.move = function(box) {
-    $(box).animate({left: '500px'});
-}
-
-Vehicle.prototype.damage = function() {
+Vehicle.prototype.move = function(obj) {
+   
+    $(obj).animate({'left':'1000px'},800).animate({'left':'-800px'},800, moveCar);
+    
+  
     
 }
 
-Vehicle.prototype.totaled = function() {
-    
-}
+// Vehicle.prototype.damage = function(e, object) {
+     
+//     if(e.target == $(object)) {
+//        $(object).damage++;
+// };
+// }
+
+// Vehicle.prototype.totaled = function(object) {
+//     if($(object).damage >= $(object).damageLimit) {
+//         $(object).remove();
+//     }
+// }
 
 var Car = function() {
     Vehicle.call(this);   
