@@ -4,9 +4,12 @@ var Vehicle = function() {
     this.damage = null;
 }
 
-Vehicle.prototype.move = function(obj) {
-   
-    $(obj).animate({'left':'1000px'},800).animate({'left':'-800px'},800, moveCar);
+Vehicle.prototype.move = function() { 
+    $('.car').animate({'left':'1200'},1000).animate({'left':'-20'},1000, moveCar);
+    $('.cop-car').animate({'top':'550'},1000).animate({'top':'-20'},1000, moveCopCar);
+    $('.tank').animate({'left':'1200'},1500).animate({'left':'-20'},1500, moveTank);
+    $('.motorcycle').animate({'left': '1200', 'top': '550'},1500).animate({'left': '-20', 'top': '-5'},1500, moveMotorcycle);
+    
     
   
     
@@ -78,6 +81,11 @@ function addCopCar() {
     copper.insert();
 }
 
+function moveCopCar () {
+    var copper = new CopCar();
+    copper.move();
+}
+
 var Tank = function() {
     Vehicle.call(this);
     this.damageLimit = 10;
@@ -100,6 +108,11 @@ Tank.prototype.insert = function () {
 function addTank() {
     var tanky = new Tank();
     tanky.insert();
+}
+
+function moveTank () {
+    var tanky = new Tank();
+    tanky.move();
 }
 
 
@@ -127,6 +140,11 @@ function addMotorcycle() {
     cycle.insert();
 }
 
+function moveMotorcycle () {
+    var cycle = new Motorcycle();
+    cycle.move();
+}
+
 $(document).ready(function () {
     $('.add-car').click(function () {
         addCar();
@@ -134,13 +152,16 @@ $(document).ready(function () {
     });
     $('.add-cop').click(function () {
         addCopCar();
+        moveCopCar();
     })
 
     $('.add-tank').click(function () {
         addTank();
+        moveTank();
     })
     $('.add-motorcycle').click(function () {
         addMotorcycle();
+        moveMotorcycle();
     });
     
 })
