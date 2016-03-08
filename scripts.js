@@ -3,10 +3,8 @@ var Vehicle = function() {
     this.damageLimit = null;
 }
 
-Vehicle.prototype.move = function() {
-    $(this.div).animate({
-        'marginLeft' : '+=30px'
-        });
+Vehicle.prototype.move = function(box) {
+    $(box).animate({left: '500px'});
 }
 
 Vehicle.prototype.damage = function() {
@@ -35,10 +33,14 @@ Car.prototype.insert = function () {
     });
 }
 
-
 function addCar() {
     var car = new Car();
     car.insert();
+}
+
+function moveCar () {
+    var car = new Car();
+    car.move('.car');
 }
 
 
@@ -115,12 +117,10 @@ function addMotorcycle() {
     cycle.insert();
 }
 
-
-
 $(document).ready(function () {
     $('.add-car').click(function () {
         addCar();
-         $('.car').move();
+        moveCar();   
     });
     $('.add-cop').click(function () {
         addCopCar();
@@ -132,5 +132,5 @@ $(document).ready(function () {
     $('.add-motorcycle').click(function () {
         addMotorcycle();
     });
-   
+    
 })
