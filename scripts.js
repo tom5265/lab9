@@ -22,14 +22,15 @@ Vehicle.prototype.move = function() {
 }
 
 Vehicle.prototype.damaged = function() {
-    this.damage = this.damage++;
+    this.damage++;
+    if (this.damage == this.damageLimit) {
+        this.totaled();
+    }
+    
 }
 
 Vehicle.prototype.totaled = function() {
-    if (this.damage == this.damageLimit) {
-        this.remove();
-    }
-
+   this.div.remove();
 }
 
 var Car = function() {
@@ -49,18 +50,6 @@ function addCar() {
         car.move();
     }, 1000);
 }
-
-
-// function CarDamage () {
-//     var car = new Car();
-//     car.damaged('.car');
-// }
-
-// function CarTotaled () {
-//     var car = new Car();
-//     car.totaled();
-// }
-
 
 var CopCar = function() {
     Vehicle.call(this);
@@ -84,7 +73,7 @@ var Tank = function() {
     this.damageLimit = 10;
     this.div.className = 'tank';
     this.div.addEventListener('click', function () {
-        this.damage();
+        this.damaged();
     }.bind(this));
 
 }
@@ -117,14 +106,12 @@ function addMotorcycle() {
 }
 
 $(document).ready(function() {
-
     $('.add-car').click(function() {
         addCar(); 
     });
     $('.add-cop').click(function() {
         addCopCar();    
     })
-
     $('.add-tank').click(function() {
         addTank();        
     })
